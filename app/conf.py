@@ -1,7 +1,6 @@
-from os import environ
+from os import getenv
 
 class Config(object):
     DEBUG = False
-
-    MONGO_URI = environ['DB']
+    MONGO_URI = getenv('DB')
     CSRF_ENABLED = False
