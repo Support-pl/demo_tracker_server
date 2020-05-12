@@ -8,7 +8,9 @@ from flask import request, jsonify, render_template
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    data = request.args.to_dict()
+    user = db.users.find_one({'token': data['token']})
+    return render_template('index.html', name=user['username'])
 
 @app.route('/signup', methods=['POST'])
 def register():
