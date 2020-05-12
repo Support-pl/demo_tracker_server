@@ -33,13 +33,12 @@ def write():
 def read():
     data = request.args.to_dict()
     if data['etime'] == -1: data['etime'] = int(datetime.timestamp(datetime.now()))
-    print(data, "\n", list(db.cords.find()))
     cords = db.cords.find(
         {
             'user.token': data['token'],
             'ts': {
-                '$gte': data['stime'],
-                '$lte': data['etime']
+                '$gte': int(data['stime']),
+                '$lte': int(data['etime'])
             }
         },
         {'lat': 1, 'lng': 1, 'ts': 1, '_id': 0}
