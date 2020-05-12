@@ -4,7 +4,11 @@ from pytz import utc
 import json
 
 from app import app, db
-from flask import request, jsonify
+from flask import request, jsonify, render_template
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/signup', methods=['POST'])
 def register():

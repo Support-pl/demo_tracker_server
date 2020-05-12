@@ -15,7 +15,7 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='public')
 
 app.config.from_object('app.conf.Config') # Loading conf from Config class in conf.py
 mongo = PyMongo(app) # Loadig mongo client using app.conf
