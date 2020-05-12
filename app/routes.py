@@ -16,14 +16,12 @@ def register():
     user['token'] = urandom(32).hex()
 
     db.users.update({'username': user['username']}, {'$set': user}, upsert=True)
-    print(user)
     return jsonify({'response': {'token': user['token'] }})
 
 @app.route('/write', methods=['POST'])
 def write():
     data = request.form.to_dict()
     user = db.users.find_one({'token': data['token']})
-    print(user, data)
     if user:
         db.cords.insert_one({
             'lat': data['lat'],
