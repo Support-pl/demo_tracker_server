@@ -29,8 +29,7 @@ def write():
 
 @app.route('/read', methods=['GET'])
 def read():
-    print(request.args)
-    data = request.form.to_dict()
+    data = request.args.to_dict()
     if data['etime'] == -1: data['etime'] = int(datetime.timestamp(datetime.now()))
     cords = db.cords.find(
         {
