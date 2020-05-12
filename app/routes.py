@@ -33,7 +33,7 @@ def write():
 def read():
     data = request.args.to_dict()
     if data['etime'] == -1: data['etime'] = int(datetime.timestamp(datetime.now()))
-    print(data, db.cords.find())
+    print(data, "\n", list(db.cords.find()))
     cords = db.cords.find(
         {
             'user.token': data['token'],
