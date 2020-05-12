@@ -8,9 +8,7 @@ from flask import request, jsonify
 
 @app.route('/signup', methods=['POST'])
 def register():
-    print(request.args, request.data, request.form)
-    return '', 200
-    user = {}
+    user = request.form.to_dict()
     user['token'] = urandom(32).hex()
 
     db.users.update({'username': user['username']}, {'$set': user}, upsert=True)
@@ -18,7 +16,7 @@ def register():
 
 @app.route('/write', methods=['POST'])
 def write():
-    data = request.json
+    data = request.form.to_dict()
     user = db.users.find_one({'token': data['token']})
     if user:
         db.cords.insert_one({
@@ -31,7 +29,7 @@ def write():
 
 @app.route('/read', methods=['GET'])
 def read():
-    data = request.json
+    data = request.form.to_dict()
     if data['etime'] == -1: data['etime'] = int(datetime.timestamp(datetime.now()))
     cords = db.cords.find(
         {
