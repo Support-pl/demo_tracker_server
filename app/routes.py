@@ -1,13 +1,16 @@
 from os import urandom
 from datetime import datetime, timedelta
 from pytz import utc
+import json
 
 from app import app, db
 from flask import request, jsonify
 
 @app.route('/signup', methods=['POST'])
 def register():
-    user = request.json
+    print(request.args, request.data, request.form)
+    return '', 200
+    user = {}
     user['token'] = urandom(32).hex()
 
     db.users.update({'username': user['username']}, {'$set': user}, upsert=True)
