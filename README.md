@@ -2,10 +2,8 @@
 
 ## `POST /signup`
 Params:
-```jsonc
-{
-    "username" : '...', // Any random username
-}
+```
+username=..., // Any random username
 ```
 Response:
 ```jsonc
@@ -18,23 +16,19 @@ Response:
 
 ## `POST /write`
 Request:
-```jsonc
-{
-	"token": "...", // Ur token
-    "lat": 0, // Latitude:  float
-    "lng": 0  // Longitude: float
-}
+```
+token=...,  // Ur token
+lat=0,      // Latitude:  float
+lng=0       // Longitude: float
 ```
 Response: `""` - 200
 
 ## `GET /read`
 Request:
-```jsonc
-{
-	"token": "...", // Ur token
-	"stime": 0,         // From which time to collect records as a timestamp
-	"etime": 1500000000 // Till which time to collect records as a timestamp
-}
+```
+token="...",      // Ur token
+stime=0,          // From which time to collect records as a timestamp
+etime=1500000000  // Till which time to collect records as a timestamp
 ```
 Response:
 ```jsonc
