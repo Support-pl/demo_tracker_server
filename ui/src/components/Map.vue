@@ -74,9 +74,9 @@ export default {
                         } : {
                             path: vm.google.maps.SymbolPath.CIRCLE,
                             fillColor: 'blue',
-                            fillOpacity: 1,
+                            fillOpacity: 0.3,
                             strokeColor: '#FFF',
-                            strokeOpacity: 1,
+                            strokeOpacity: 0.7,
                             strokeWeight: 3,
                             scale: 15,
                         }
