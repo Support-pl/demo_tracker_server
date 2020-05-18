@@ -78,7 +78,7 @@ export default {
                             strokeColor: '#FFF',
                             strokeOpacity: 1,
                             strokeWeight: 3,
-                            scale: 7,
+                            scale: 15,
                         }
                     })
                 )
