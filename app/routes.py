@@ -48,6 +48,7 @@ def read():
         },
         {'lat': 1, 'lng': 1, 'ts': 1, '_id': 0}
     )
+    cords = map(lambda el: {'lat': float(el['lat']), 'lng': float(el['lng']), 'ts': el['ts']}, cords)
     return jsonify(list(cords))
 
 @app.route('/maps_token', methods=['GET'])
