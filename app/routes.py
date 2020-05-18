@@ -1,4 +1,4 @@
-from os import urandom
+from os import urandom, getenv
 from datetime import datetime, timedelta
 from pytz import utc
 import json
@@ -10,7 +10,7 @@ from flask import request, jsonify, render_template
 def index():
     data = request.args.to_dict()
     user = db.users.find_one({'token': data['token']})
-    return render_template('index.html', name=user['username'])
+    return render_template('index.html', token=user['token'])
 
 @app.route('/signup', methods=['POST'])
 def register():
@@ -26,8 +26,8 @@ def write():
     user = db.users.find_one({'token': data['token']})
     if user:
         db.cords.insert_one({
-            'lat': data['lat'],
-            'lng': data['lng'],
+            'lat': float(data['lat']),
+            'lng': float(data['lng']),
             'ts':  int(datetime.timestamp(datetime.now())),
             'user': user
         })
@@ -36,7 +36,8 @@ def write():
 @app.route('/read', methods=['GET'])
 def read():
     data = request.args.to_dict()
-    if data['etime'] == -1: data['etime'] = int(datetime.timestamp(datetime.now()))
+    if int(data['etime']) == -1: data['etime'] = int(datetime.timestamp(datetime.now()))
+
     cords = db.cords.find(
         {
             'user.token': data['token'],
@@ -48,3 +49,15 @@ def read():
         {'lat': 1, 'lng': 1, 'ts': 1, '_id': 0}
     )
     return jsonify(list(cords))
+
+@app.route('/maps_token', methods=['GET'])
+def token():
+    return app.config['GOOGLE_MAPS_API_TOKEN']
+
+if getenv('FLASK_ENV') == 'development':
+    @app.route('/all', methods=['GET'])
+    def all():
+        return jsonify({
+            "users": list(db.users.find()),
+            "cords": list(db.cords.find())
+        })
